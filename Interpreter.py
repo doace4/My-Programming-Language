@@ -9,11 +9,11 @@ count = 0
 while count < len(read):
     code = read[count]
 
-    if read[count].__contains__("print"):
+    if "print" in code:
         result = globals()[code.split(": ")[1]]
         print(result)
 
-    elif read[count].__contains__("set"):
+    elif "set" in code:
         code = code.replace("set ", "")
         code = code.split(": ")
 
@@ -23,11 +23,15 @@ while count < len(read):
         except ValueError:
             globals()[code[0]] = code[1]
 
-    elif read[count].__contains__("inc"):
+    elif "inc" in code:
         code = code.split(": ")
         globals()[code[1]] += 1
+        
+    elif "dec" in code:
+        code = code.split(": ")
+        globals()[code[1]] -= 1
 
-    elif read[count].__contains__("condition"):
+    elif "condition" in code:
         code = code.split(": ")
 
         if eval(code[1]):
