@@ -5,12 +5,13 @@ for x, y in enumerate(read):
     read[x] = y.replace("\n", "")
 
 count = 0
+variables = dict()
 
 while count < len(read):
     code = read[count]
 
     if "print" in code:
-        result = globals()[code.split(": ")[1]]
+        result = variables[code.split(": ")[1]]
         print(result)
 
     elif "set" in code:
@@ -18,18 +19,18 @@ while count < len(read):
         code = code.split(": ")
 
         try:
-            globals()[code[0]] = int(code[1])
+            variables[code[0]] = int(code[1])
 
         except ValueError:
-            globals()[code[0]] = code[1]
+            variables[code[0]] = code[1]
 
     elif "inc" in code:
         code = code.split(": ")
-        globals()[code[1]] += 1
+        variables[code[1]] += 1
         
     elif "dec" in code:
         code = code.split(": ")
-        globals()[code[1]] -= 1
+        variables[code[1]] -= 1
 
     elif "condition" in code:
         code = code.split(": ")
